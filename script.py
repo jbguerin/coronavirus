@@ -15,8 +15,9 @@ df = pd.read_csv("novel-corona-virus-2019-dataset/covid_19_data.csv")
 df = df.rename(columns={'Country/Region':'Country'})
 df = df.rename(columns={'ObservationDate':'Date'})
 
-# Get date of last update
-last_update = np.max(df['Date'])
+# Get date of last entry in the dataset
+last_date = np.max(df['Date'])
+last_date = last_date[3:6] + last_date[:2] + last_date[5:]
 
 # Manipulate Dataframe
 df_countries = df.groupby(['Country', 'Date']).sum().reset_index().sort_values('Date', ascending=False)
@@ -28,20 +29,38 @@ choroplethmap = go.Figure(data=go.Choropleth(locations=df_countries['Country'], 
                                    z=df_countries['Confirmed'], colorscale='Reds', marker_line_color='black',
                                    marker_line_width=0.5))
 
-choroplethmap.update_layout(title_text='Confirmed Cases as of '+last_update, title_x=0.5,
-                  geo=dict(showframe=False, showcoastlines=False, projection_type='equirectangular'))
+choroplethmap.update_layout(title_text='Cas confirmés : ' + last_date, title_x=0.5,
+                            geo=dict(showframe=False, showcoastlines=False, projection_type='orthographic'))
 
 plot(choroplethmap, filename='choroplethmap.html')
 
+
+# Plotting confirmed cases by date
+
 # Manipulate Dataframe
-df_countrydate = df[df['Confirmed'] > 0]
-df_countrydate = df_countrydate.groupby(['Date', 'Country']).sum().reset_index()
+df_confirmed_cases = df[df['Confirmed'] > 0]
+df_confirmed_cases = df_confirmed_cases.groupby(['Date', 'Country']).sum().reset_index()
 
 # Create visualization over time
-vis = px.choropleth(df_countrydate, locations="Country", locationmode="country names", color="Confirmed",
-                    hover_name="Country", animation_frame="Date", color_continuous_scale='Reds')
+confirmed_cases = px.choropleth(df_confirmed_cases, locations="Country", locationmode="country names", color="Confirmed",
+                                hover_name="Country", animation_frame="Date", color_continuous_scale='Reds')
 
-vis.update_layout(title_text='Global Spread of Coronavirus', title_x=0.5,
-                  geo=dict(showframe=False, showcoastlines=False))
+confirmed_cases.update_layout(title_text='Évolution du nombre de cas confirmés par pays', title_x=0.5,
+                              geo=dict(showframe=False, showcoastlines=False))
 
-plot(vis, filename='visualization.html')
+plot(confirmed_cases, filename='confirmedcases.html')
+
+
+
+# Plotting deaths by date
+
+df_deaths = df[df['Deaths'] > 0]
+df_deaths = df_deaths.groupby(['Date', 'Country']).sum().reset_index()
+
+deaths = px.choropleth(df_deaths, locations="Country", locationmode="country names", color="Deaths",
+                       hover_name="Country", animation_frame="Date", color_continuous_scale='Reds')
+
+deaths.update_layout(title_text='Évolution du nombre de décès par pays', title_x=0.5,
+                              geo=dict(showframe=False, showcoastlines=False))
+
+plot(deaths, filename='deaths.html')

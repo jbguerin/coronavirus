@@ -1,7 +1,3 @@
-"""
-Based on : https://towardsdatascience.com/visualizing-the-coronavirus-pandemic-with-choropleth-maps-7f30fccaecf5
-Data source : https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/data#covid_19_data.csv
-"""
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -9,6 +5,7 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 
 # Read data
+# Data source: https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/data#covid_19_data.csv
 df = pd.read_csv("novel-corona-virus-2019-dataset/covid_19_data.csv")
 
 # Rename columns

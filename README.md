@@ -1,6 +1,6 @@
 # COVID-19 visualizations
  
-Uses data from [Novel Corona Virus 2019 Dataset](https://github.com/jbguerin/coronavirus/tree/master/docs/html).
+Uses data from [Novel Corona Virus 2019 Dataset](https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset).
 We use Plotly for the visuals. HTML plot files are available [here](https://github.com/jbguerin/coronavirus/tree/master/docs/html).  
 
  ##

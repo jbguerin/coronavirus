@@ -29,7 +29,9 @@ choroplethmap = go.Figure(data=go.Choropleth(locations=df_countries['Country'], 
 choroplethmap.update_layout(title_text='Cas confirmés : ' + last_date, title_x=0.5,
                             geo=dict(showframe=False, showcoastlines=False, projection_type='orthographic'))
 
-plot(choroplethmap, filename='choroplethmap.html')
+plot(choroplethmap, filename='docs/html/choroplethmap.html')
+choroplethmap.write_image("docs/imgs/choroplethmap.png")
+
 
 
 # Plot confirmed cases by date
@@ -45,7 +47,9 @@ confirmed_cases = px.choropleth(df_confirmed_cases, locations="Country", locatio
 confirmed_cases.update_layout(title_text='Évolution du nombre de cas confirmés par pays', title_x=0.5,
                               geo=dict(showframe=False, showcoastlines=False))
 
-plot(confirmed_cases, filename='confirmedcases.html')
+plot(confirmed_cases, filename='docs/html/confirmedcases.html')
+confirmed_cases.write_image("docs/imgs/confirmedcases.png")
+
 
 # Plot deaths by date
 
@@ -58,4 +62,5 @@ deaths = px.choropleth(df_deaths, locations="Country", locationmode="country nam
 deaths.update_layout(title_text='Évolution du nombre de décès par pays', title_x=0.5,
                               geo=dict(showframe=False, showcoastlines=False))
 
-plot(deaths, filename='deaths.html')
+plot(deaths, filename='docs/html/deaths.html')
+deaths.write_image("docs/imgs/deaths.png")

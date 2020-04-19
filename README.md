@@ -1,7 +1,7 @@
 # COVID-19 visualizations
  
  ## Examples
-[Link to HTML files](https://github.com/jbguerin/coronavirus/tree/master/docs/html)
+HTML files are available [here](https://github.com/jbguerin/coronavirus/tree/master/docs/html). 
 
 <p align="center">
     <img src="https://github.com/jbguerin/coronavirus/blob/master/docs/imgs/choroplethmap.png"> <br>
@@ -17,3 +17,5 @@
     <img src="https://github.com/jbguerin/coronavirus/blob/master/docs/imgs/deaths.png"> <br>
     <em>Choropleth map</em>
 </p>
+
+ Three or more... --- Hyphens *** Asterisks ___ Underscores

@@ -5,7 +5,6 @@ import plotly.graph_objs as go
 from plotly.offline import plot
 
 # Read data
-# Data source: https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset/data#covid_19_data.csv
 df = pd.read_csv("novel-corona-virus-2019-dataset/covid_19_data.csv")
 
 # Rename columns
@@ -27,7 +26,7 @@ choroplethmap = go.Figure(data=go.Choropleth(locations=df_countries['Country'], 
                                    marker_line_width=0.5))
 
 choroplethmap.update_layout(title_text='Cas confirmés : ' + last_date, title_x=0.5,
-                            geo=dict(showframe=False, showcoastlines=False, projection_type='orthographic'))
+                            geo=dict(showframe=False, showocean=True, showcoastlines=True, projection_type='orthographic'))
 
 plot(choroplethmap, filename='docs/html/choroplethmap.html')
 choroplethmap.write_image("docs/imgs/choroplethmap.png")
@@ -51,6 +50,7 @@ plot(confirmed_cases, filename='docs/html/confirmedcases.html')
 confirmed_cases.write_image("docs/imgs/confirmedcases.png")
 
 
+
 # Plot deaths by date
 
 df_deaths = df[df['Deaths'] > 0]
@@ -64,3 +64,25 @@ deaths.update_layout(title_text='Évolution du nombre de décès par pays', titl
 
 plot(deaths, filename='docs/html/deaths.html')
 deaths.write_image("docs/imgs/deaths.png")
+
+
+
+# Plot summary of worldwide cases
+
+confirmed = df.groupby('Date').sum()['Confirmed'].reset_index()
+deaths = df.groupby('Date').sum()['Deaths'].reset_index()
+recovered = df.groupby('Date').sum()['Recovered'].reset_index()
+
+summary = go.Figure()
+summary.add_trace(go.Scatter(x=confirmed['Date'], y=confirmed['Confirmed'], mode='lines+markers', name='Confirmés', marker_color='orange'))
+summary.add_trace(go.Scatter(x=deaths['Date'], y=deaths['Deaths'], mode='lines+markers', name='Décès', marker_color='black'))
+summary.add_trace(go.Scatter(x=recovered['Date'], y=recovered['Recovered'], mode='lines+markers', name='Guéris', marker_color='red'))
+
+summary.update_layout(
+    title='Cas de coronavirus à travers le monde - Confirmés, Décès, Guéris',
+    xaxis_tickfont_size=9,
+    legend=dict(x=0, y=1.0, bgcolor='rgba(255, 255, 255, 0)', bordercolor='rgba(255, 255, 255, 0)'),
+    )
+
+plot(summary, filename='docs/html/summary.html')
+summary.write_image("docs/imgs/summary.png")

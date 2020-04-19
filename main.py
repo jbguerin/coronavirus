@@ -32,7 +32,7 @@ choroplethmap.update_layout(title_text='Cas confirmés : ' + last_date, title_x=
 plot(choroplethmap, filename='choroplethmap.html')
 
 
-# Plotting confirmed cases by date
+# Plot confirmed cases by date
 
 # Manipulate Dataframe
 df_confirmed_cases = df[df['Confirmed'] > 0]
@@ -47,9 +47,7 @@ confirmed_cases.update_layout(title_text='Évolution du nombre de cas confirmés
 
 plot(confirmed_cases, filename='confirmedcases.html')
 
-
-
-# Plotting deaths by date
+# Plot deaths by date
 
 df_deaths = df[df['Deaths'] > 0]
 df_deaths = df_deaths.groupby(['Date', 'Country']).sum().reset_index()
